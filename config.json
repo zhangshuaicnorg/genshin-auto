@@ -1,0 +1,12 @@
+{
+  "domiso": {
+    "selectedDir": "",
+    "bpm_coefficient": 0.98,
+    "arpeggio_delay_per": 0.08,
+    "auto_play_canvas": {
+      "is_scroll": false,
+      "num": 16,
+      "is_adaptive": true
+    }
+  }
+}
