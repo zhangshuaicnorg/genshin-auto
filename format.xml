@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<body>
+
+    <keywords>
+        <keyword>
+            <name>dms</name>
+            <description>将dms文件转换为乐谱</description>
+        </keyword>
+    </keywords>
+    <tips>
+        @param file 传入的文件
+        @param domiso GenshinDoMiSo实例
+        @return 处理后得到的乐谱
+    </tips>>
+    <auto_save>
+        <read>
+            <script domiso="@DOMISO OBJ" return="@content|String">
+<!--                读取逻辑-->
+                plugin io
+                fileIO = open(file("auto_save.txt"))
+                input = fileIO.input()
+                result = str(input.readAllBytes())
+                fileIO.close()
+                domiso.changeAutoProcess(result)
+                return result
+            </script>
+        </read>
+        <write>
+            <script input="@input|TextPane">
+<!--                写入逻辑-->
+                plugin io
+                fileIO = open(file("auto_save.txt"))
+                output = fileIO.output()
+                output.write(input.getText().getBytes())
+                fileIO.close()
+            </script>
+        </write>
+    </auto_save>
+    <format type="txt">
+        <script>
+            content = readString(file)
+            domiso.changeAutoProcess(content)
+            return content
+        </script>
+    </format>
+    <format type="dms">
+        <script>
+            result_arr = dms(file)
+            domiso.changeAutoProcess(result_arr[1])
+            return result_arr[0] + result_arr[1]
+        </script>
+    </format>
+    <format type="mid">
+        <script>
+            result = mid_parser.convert(file)
+            domiso.changeAutoProcess(result)
+            return "mid file"
+        </script>
+    </format>
+    <plugin>
+<!--        定义函数，尽量不要在format或者auto_save里面书写函数，否则每次运行都要创建-->
+        <function definition="example(args)">
+            do some
+            ....
+        </function>
+    </plugin>
+</body>
